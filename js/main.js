@@ -15,7 +15,7 @@ const body = document.querySelector('body');
 
 var isFirefox = typeof InstallTrigger !== 'undefined';
 
-var isChrome = !!window.chrome && !!window.chrome.webstore;
+var isChrome = !!window.isChrome && !!window.isChrome.webstore;
 
 let voices = [];
 
@@ -34,15 +34,22 @@ const getVoices = () => {
   });
 };
 
-if (isFirefox) {
-    getVoices();
+getVoices();
+if (synth.onvoiceschanged !== undefined) {
+  synth.onvoiceschanged = getVoices;
 }
 
-if (isChrome) {
-    if (synth.onvoiceschanged !== undefined) {
-        synth.onvoiceschanged = getVoices;
-    }
-}
+// ## results in error of not loading any voices
+// if (isFirefox) {
+//     getVoices();
+// }
+
+// if (isChrome) {
+//     if (synth.onvoiceschanged !== undefined) {
+//         synth.onvoiceschanged = getVoices;
+//     }
+// }
+
 
 const speak = () => {
   
